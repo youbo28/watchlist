@@ -16,14 +16,14 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.openclassrooms.watchlist.Domain.WatchlistItem;
 import com.openclassrooms.watchlist.Exception.DublicateTileException;
-import com.openclassrooms.watchlist.Service.WatchlistService;
+import com.openclassrooms.watchlist.Service.impl.WatchlistServiceImpl;
 
 @Controller
 public class WatchlistController {
-	private WatchlistService watchlistService;
+	private WatchlistServiceImpl watchlistService;
 
 	@Autowired
-	public WatchlistController(WatchlistService watchlistService) {
+	public WatchlistController(WatchlistServiceImpl watchlistService) {
 		super();
 		this.watchlistService = watchlistService;
 	}

@@ -1,50 +1,43 @@
 package com.openclassrooms.watchlist;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.openclassrooms.watchlist.Domain.WatchlistItem;
+import com.openclassrooms.watchlist.Repository.WatchlistRepository;
+import com.openclassrooms.watchlist.Service.impl.MovieRatingServiceImpl;
+import com.openclassrooms.watchlist.Service.impl.WatchlistServiceImpl;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.openclassrooms.watchlist.Domain.WatchlistItem;
-import com.openclassrooms.watchlist.Repository.WatchlistRepository;
-import com.openclassrooms.watchlist.Service.MovieRatingService;
-import com.openclassrooms.watchlist.Service.WatchlistService;
+import java.util.Arrays;
+import java.util.List;
 
-@RunWith(MockitoJUnitRunner.class)
-
+@ExtendWith(MockitoExtension.class)
 public class WatchlistServiceTest {
 	@Mock
-	private WatchlistRepository watchlistRepositorymock;
-
+	private WatchlistRepository watchlistRepository;
 	@Mock
-	private MovieRatingService movieRatingServicemock;
+	private MovieRatingServiceImpl movieRatingService;
 	@InjectMocks
-	private WatchlistService watchlistService;
+	private WatchlistServiceImpl watchlistService;
 
 	@Test
 	public void testGetWatchlistItemsReturnAllItemsFromRpository() throws Exception {
 		// Arrange
-		watchlistRepositorymock = Mockito.mock(WatchlistRepository.class);
-		watchlistService=Mockito.mock(WatchlistService.class);
-		movieRatingServicemock=Mockito.mock(MovieRatingService.class);
 		WatchlistItem item1 = new WatchlistItem("Coco", "9.6", "h", "it's nice");
 
-		WatchlistItem item2 = new WatchlistItem("tenet", "7.8", "l", "time travelle");
-		
-		List<WatchlistItem> mockItems = new ArrayList<WatchlistItem>();
+		WatchlistItem item2 = new WatchlistItem("Tenet", "7.8", "l", "time travelle");
+
+		List<WatchlistItem> mockItems = Arrays.asList(item1, item2);
 		//System.out.println(mockItems.get(1).getId());
 
-		Mockito.when(watchlistRepositorymock.getList()).thenReturn(mockItems);
+		Mockito.when(watchlistRepository.getList()).thenReturn(mockItems);
 
 		// Act
 		List<WatchlistItem> result = watchlistService.getWatchlistItems();
-		System.out.println(result.get(1).getId());
 		// Assert
 		Assert.assertTrue(result.size() == 2);
 		Assert.assertTrue(result.get(0).getTitle().equals("Coco"));
